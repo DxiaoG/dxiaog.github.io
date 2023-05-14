@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="媒体查询是一种通过某些特征，功能和用户偏好设置定位浏览器，然后应用样式或基于这些内容运行其他代码的方法。最常见的媒体查询是针对特定视口范围并应用自定义样式的查询，这些查询催生了响应式设计的整个思想。 123456&#x2F;* When the browser is at least 600px and above *&#x2F;@media screen and (min-width: 600px) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 媒体查询">
+<meta property="og:url" content="https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="段晓刚">
+<meta property="og:description" content="媒体查询是一种通过某些特征，功能和用户偏好设置定位浏览器，然后应用样式或基于这些内容运行其他代码的方法。最常见的媒体查询是针对特定视口范围并应用自定义样式的查询，这些查询催生了响应式设计的整个思想。 123456&#x2F;* When the browser is at least 600px and above *&#x2F;@media screen and (min-width: 600px) &amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qiniu.duanxiaogang.cn//media-query-anatomy.jpg">
+<meta property="article:published_time" content="2020-03-15T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-14T11:37:28.683Z">
+<meta property="article:author" content="段晓刚">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qiniu.duanxiaogang.cn//media-query-anatomy.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CSS 媒体查询</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/dxiaog">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2020/03/17/CSS%20%E4%B8%AD%E7%9A%84%20calc()/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2020/03/14/CSS%20%E5%B1%85%E4%B8%AD/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&text=CSS 媒体查询"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&is_video=false&description=CSS 媒体查询"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSS 媒体查询&body=Check out this article: https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&name=CSS 媒体查询&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&t=CSS 媒体查询"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">使用媒体查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-HTML-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.</span> <span class="toc-text">在 HTML 中使用媒体查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-CSS-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">在 CSS 中使用媒体查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-JavaScript-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.</span> <span class="toc-text">在 JavaScript 中使用媒体查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">媒体查询的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#media"><span class="toc-number">2.1.</span> <span class="toc-text">@media</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Media-types"><span class="toc-number">2.2.</span> <span class="toc-text">Media types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Media-features"><span class="toc-number">2.3.</span> <span class="toc-text">Media features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Operators"><span class="toc-number">2.4.</span> <span class="toc-text">Operators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-min-%E5%92%8C-max-%E5%8C%B9%E9%85%8D%E8%8C%83%E5%9B%B4"><span class="toc-number">2.5.</span> <span class="toc-text">使用 min- 和 max- 匹配范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97"><span class="toc-number">2.6.</span> <span class="toc-text">嵌套</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        CSS 媒体查询
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">段晓刚</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-15T00:00:00.000Z" class="dt-published" itemprop="datePublished">2020-03-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>媒体查询是一种通过某些特征，功能和用户偏好设置定位浏览器，然后应用样式或基于这些内容运行其他代码的方法。最常见的媒体查询是针对特定视口范围并应用自定义样式的查询，这些查询催生了响应式设计的整个思想。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* When the browser is at least 600px and above */</span></span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">600px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="comment">/* Apply some styles */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了视口宽度外，还有很多其他可以检测的类型，比如屏幕分辨率，设备方向，操作系统。</p>
+<h2 id="使用媒体查询"><a href="#使用媒体查询" class="headerlink" title="使用媒体查询"></a>使用媒体查询</h2><p>媒体查询通常与 CSS 相关联，但也可以在 HTML 和 JavaScript 中使用。</p>
+<h3 id="在-HTML-中使用媒体查询"><a href="#在-HTML-中使用媒体查询" class="headerlink" title="在 HTML 中使用媒体查询"></a>在 HTML 中使用媒体查询</h3><p>有几种方法可以直接在 HTML 中使用媒体查询。</p>
+<p>在<code>&lt;head&gt;</code> 标签里的 <code>&lt;link&gt;</code> 上使用。在这个例子中，我们告诉浏览器要在不同的视口尺寸下使用不同的样式表：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to all users --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;all.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to screens that are at least 20em wide --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;small.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 20em)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to screens that are at least 64em wide --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;medium.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 64em)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to screens that are at least 90em wide --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;large.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 90em)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to screens that are at least 120em wide --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;extra-large.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 120em)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Served to print media, like printers --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;print.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;print&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>通过给匹配的设备下载和提供样式的方式来拆分样式，可以提升一定的网站性能。<br>但是请注意，这并不会总是阻止媒体查询不匹配的样式表的下载，这只是为它们分配了较低的加载优先级。<br>如果像手机这样的小屏幕设备访问该站点，它将仅在与其视口大小匹配的媒体查询中下载样式表。<br>但是，如果出现较大的桌面屏幕，它将下载全部文件，因为它与所有这些查询都匹配（在此特定示例中，除去打印查询）。</p>
+<p>除此之外，我们还可以在 <code>&lt;source&gt;</code> 元素上使用媒体查询，通知浏览器应该使用哪个图像来渲染 <code>&lt;picture&gt;</code> 元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Use this image if the screen is at least 800px wide --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">&quot;cat-landscape.png&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 800px)&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Use this image if the screen is at least 600px wide --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">&quot;cat-cropped.png&quot;</span> <span class="attr">media</span>=<span class="string">&quot;(min-width: 600px)&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Use this image if nothing matches --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;cat.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;A calico cat with dark aviator sunglasses.&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过把较小的图像提供给较小的设备，同样也可以提升一定的性能。</p>
+<p>我们还可以直接在 <code>&lt;stlye&gt;</code> 元素上使用媒体查询：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background-color</span>: blue;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">&quot;all and (max-width: 500px)&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background-color</span>: yellow;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">color</span>: blue;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在-CSS-中使用媒体查询"><a href="#在-CSS-中使用媒体查询" class="headerlink" title="在 CSS 中使用媒体查询"></a>在 CSS 中使用媒体查询</h3><p>CSS 是媒体查询最常见的地方。当浏览器匹配到  <code>@media</code> 规则中设置的条件时，<code>@media</code> 中包裹的样式就会正常显示。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Viewports between 320px and 480px wide */</span></span><br><span class="line"><span class="keyword">@media</span> <span class="keyword">only</span> screen <span class="keyword">and</span> (<span class="attribute">min-device-width</span>: <span class="number">320px</span>) <span class="keyword">and</span> (<span class="attribute">max-device-width</span>: <span class="number">480px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.card</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#bada55</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以对导入的样式表使用媒体查询，但是一般来说，避免使用 @import，因为效果不佳。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Avoid using @import if possible! */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Base styles for all screens */</span></span><br><span class="line"><span class="keyword">@import</span> url(<span class="string">&quot;style.css&quot;</span>) screen;</span><br><span class="line"><span class="comment">/* Styles for screens in a portrait (narrow) orientation */</span></span><br><span class="line"><span class="keyword">@import</span> url(<span class="string">&#x27;landscape.css&#x27;</span>) screen <span class="keyword">and</span> (<span class="attribute">orientation</span>: portrait);</span><br><span class="line"><span class="comment">/* Print styles */</span></span><br><span class="line"><span class="keyword">@import</span> url(<span class="string">&quot;print.css&quot;</span>) print;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在-JavaScript-中使用媒体查询"><a href="#在-JavaScript-中使用媒体查询" class="headerlink" title="在 JavaScript 中使用媒体查询"></a>在 JavaScript 中使用媒体查询</h3><p>我们也可以在 JavaScript 中使用媒体查询！它们的工作方式与 CSS 十分相似。<br>首先，使用  <code>window.matchMedia（）</code>  方法来定义条件。<br>假设要在浏览器宽度至少为 768px 时将消息输出到控制台。<br>可以调用  <code>matchMedia（）</code>  来创建一个定义了屏幕宽度的常量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a media condition that targets viewports at least 768px wide</span></span><br><span class="line"><span class="keyword">const</span> mediaQuery = <span class="variable language_">window</span>.<span class="title function_">matchMedia</span>( <span class="string">&#x27;( min-width: 768px )&#x27;</span> )</span><br></pre></td></tr></table></figure>
+
+<p>然后，当该条件匹配时，将消息发送到控制台：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a media condition that targets viewports at least 768px wide</span></span><br><span class="line"><span class="keyword">const</span> mediaQuery = <span class="variable language_">window</span>.<span class="title function_">matchMedia</span>( <span class="string">&#x27;( min-width: 768px )&#x27;</span> )</span><br><span class="line"></span><br><span class="line"><span class="comment">// Note the `matches` property</span></span><br><span class="line"><span class="keyword">if</span> ( mediaQuery.<span class="property">matches</span> ) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Media Query Matched!&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意此操作只会触发一次，在不刷新的情况下，更改屏幕宽度不会再次触发。<br>因此，最好使用侦听器来检查更新。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a condition that targets viewports at least 768px wide</span></span><br><span class="line"><span class="keyword">const</span> mediaQuery = <span class="variable language_">window</span>.<span class="title function_">matchMedia</span>(<span class="string">&#x27;(min-width: 768px)&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleTabletChange</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="comment">// Check if the media query is true</span></span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">matches</span>) &#123;</span><br><span class="line">    <span class="comment">// Then log the following message to the console</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Media Query Matched!&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Register event listener</span></span><br><span class="line">mediaQuery.<span class="title function_">addListener</span>(handleTabletChange)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Initial check</span></span><br><span class="line"><span class="title function_">handleTabletChange</span>(mediaQuery)</span><br></pre></td></tr></table></figure>
+
+<h2 id="媒体查询的语法"><a href="#媒体查询的语法" class="headerlink" title="媒体查询的语法"></a>媒体查询的语法</h2><p>现在，我们已经看到了几个可以使用媒体查询的示例，让我们将它们拆开，看看它们的实际作用。</p>
+<p><img src="https://qiniu.duanxiaogang.cn//media-query-anatomy.jpg" alt="media-query-anatomy"></p>
+<h3 id="media"><a href="#media" class="headerlink" title="@media"></a>@media</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> [media-type] ([media-feature]) &#123;</span><br><span class="line">  <span class="comment">/* Styles! */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在媒体查询结构中第一个组成部分就是 <code>@media</code> 本身。它是许多 CSS 规则中的一种，它与查看网站的媒体类型有关。</p>
+<h3 id="Media-types"><a href="#Media-types" class="headerlink" title="Media types"></a>Media types</h3><ul>
+<li><code>all</code> ：匹配所有设备</li>
+<li><code>print</code> : 匹配在打印预览中查看的文档或将内容分解为要打印的页面的任何媒体</li>
+<li><code>screen</code> : 将设备与屏幕匹配</li>
+<li><code>speech</code> : 匹配可听读内容的设备，例如屏幕阅读器</li>
+</ul>
+<h3 id="Media-features"><a href="#Media-features" class="headerlink" title="Media features"></a>Media features</h3><p>定义了要匹配的媒体类型后，就可以开始定义我们要匹配的媒体特征。</p>
+<p>我们可以匹配很多特征，<a target="_blank" rel="noopener" href="https://www.w3.org/TR/mediaqueries-4/#mq-features">Media Queries Level 4</a> 将 18 种特征分成 5 大类：</p>
+<p><strong>Viewport&#x2F;Page Characteristics</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Feature</th>
+<th align="left">Summary</th>
+<th align="center">Values</th>
+<th align="center">Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>width</code></td>
+<td align="left">Defines the widths of the viewport. This can be a specific number (e.g. <code>400px</code>) or a range (using <code>min-width</code> and <code>max-width</code>).</td>
+<td align="center"><code>&lt;length&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><code>hight</code></td>
+<td align="left">Defines the height of the viewport. This can be a specific number (e.g. <code>400px</code>) or a range (using <code>min-height</code> and <code>max-height</code>).</td>
+<td align="center"><code>&lt;length&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><code>aspect-ratio</code></td>
+<td align="left">Defines the width-to-height aspect ratio of the viewport</td>
+<td align="center"><code>&lt;ratio&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><code>orientation</code></td>
+<td align="left">The way the screen is oriented, such as tall (<code>portrait</code>) or wide (<code>landscape</code>) based on how the device is rotated.</td>
+<td align="center"><code>portrait</code>  <code>landscape</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><code>overflow-block</code></td>
+<td align="left">Checks how the device treats content that overflows the viewport in the block direction, which can be <code>scroll</code> (allows scrolling), <code>optional-paged</code> (allows scrolling and manual page breaks), <code>paged</code> (broken up into pages), and <code>none</code> (not displayed).</td>
+<td align="center"><code>scroll</code>  <code>optional-paged</code>  <code>paged</code></td>
+<td align="center">Media Queries Level 4</td>
+</tr>
+<tr>
+<td align="center"><code>overflow-inline</code></td>
+<td align="left">Checks if content that overflows the viewport along the inline axis be scrolled, which is either <code>none</code> (no scrolling) or <code>scroll</code> (allows scrolling).</td>
+<td align="center"><code>scroll</code>  <code>none</code></td>
+<td align="center">Media Queries Level 4</td>
+</tr>
+</tbody></table>
+<p><strong>Display Quality</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>resolution</code></td>
+<td>Defines the target pixel density of the device</td>
+<td><code>&lt;resolution&gt;</code>  <code>infinite</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>scan</code></td>
+<td>Defines the scanning process of the device, which is the way the device paints an image onto the screen (where <code>interlace</code> draws odd and even lines alternately, and <code>progressive</code> draws them all in sequence).</td>
+<td><code>interlace</code>  <code>progressive</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>grid</code></td>
+<td>Determines if the device uses a grid (<code>1</code>) or bitmap (<code>0</code>) screen</td>
+<td><code>0</code> &#x3D; Bitmap <code>1</code> &#x3D; Grid</td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td>Checks how frequently the device can modify the appearance of content (if it can at all), with values including <code>none</code>, <code>slow</code> and <code>fast</code>.</td>
+<td><code>slow</code>  <code>fast</code>  <code>none</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>environment-blending</code></td>
+<td>A method for determining the external environment of a device, such as dim or excessively bright places.</td>
+<td><code>opaque</code>  <code>additive</code>  <code>subtractive</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>display-mode</code></td>
+<td>Tests the display mode of a device, including <code>fullscreen</code>(no browsers chrome), <code>standalone</code> (a standalone application), <code>minimal-ui</code> (a standalone application, but with some navigation), and <code>browser</code> (a more traditional browser window)</td>
+<td><code>fullscreen</code>  <code>standalone</code>  <code>minimal-ui</code>  <code>browser</code></td>
+<td><a target="_blank" rel="noopener" href="https://w3c.github.io/manifest/#the-display-mode-media-feature">Web App Manifest</a></td>
+</tr>
+</tbody></table>
+<p><strong>Color</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>color</code></td>
+<td>Defines the color support of a device, expressed numerically as bits. So, a value of <code>12</code> would be the equivalent of a device that supports 12-bit color, and a value of zero indicates no color support.</td>
+<td><code>&lt;integer&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>color-index</code></td>
+<td>Defines the number of values the device supports. This can be a specific number (e.g. <code>10000</code>) or a range (e.g. <code>min-color-index: 10000</code>, <code>max-color-index: 15000</code>), just like <code>width</code>.</td>
+<td><code>&lt;integer&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>monochrome</code></td>
+<td>The number of bits per pixel that a device’s monochrome supports, where zero is no monochrome support.</td>
+<td><code>&lt;integer&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>color-gamut</code></td>
+<td>Defines the range of colors supported by the browser and device, which could be <code>srgb</code>, <code>p3</code> or <code>rec2020</code></td>
+<td><code>srgb</code>  <code>p3</code>  <code>rec2020</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>dynamic-range</code></td>
+<td>The combination of how much brightness, color depth, and contrast ratio supported by the video plane of the browser and user device.</td>
+<td><code>standard</code>  <code>high</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>inverted-colors</code></td>
+<td>Checks if the browser or operating system is set to invert colors (which can be useful for optimizing accessibility for sight impairments involving color)</td>
+<td><code>inverted</code>  <code>none</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+</tbody></table>
+<p><strong>Interaction</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pointer</code></td>
+<td>Sort of like <code>any-pointer</code> but checks if the <em>primary</em> input mechanism is a pointer and, if so, how accurate it is (where <code>coarse</code> is less accurate, <code>fine</code> is more accurate, and <code>none</code> is no pointer).</td>
+<td><code>coarse</code>  <code>fine</code>  <code>none</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>hover</code></td>
+<td>Sort of like <code>any-hover</code> but checks if the <em>primary</em> input mechanism (e.g. mouse of touch) allows the user to hover over elements</td>
+<td><code>hover</code>  <code>none</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>any-pointer</code></td>
+<td>Checks if the device uses a pointer, such as a mouse or styles, as well as how accurate it is (where <code>coarse</code> is less accurate and <code>fine</code> is more accurate)</td>
+<td><code>coarse</code>  <code>fine</code>  <code>none</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>any-hover</code></td>
+<td>Checks if the device is capable of hovering elements, like with a mouse or stylus. In some rare cases, touch devices are capable of hovers.</td>
+<td><code>hovernone</code></td>
+<td>Media Queries Level 4</td>
+</tr>
+</tbody></table>
+<p><strong>Video Prefixed</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>video-color-gamut</code></td>
+<td>Describes the approximate range of colors supported by the video plane of the browser and user device</td>
+<td><code>srgb</code>  <code>p3</code>  <code>rec2020</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>video-dynamic-range</code></td>
+<td>The combination of how much brightness, color depth, and contrast ratio supported by the video plane of the browser and user device.</td>
+<td><code>standard</code>  <code>high</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>video-width</code>¹</td>
+<td>The width of the video plane area of the targeted display</td>
+<td><code>&lt;length&gt;</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>video-height</code>¹</td>
+<td>The height of the video plane area of the targeted display</td>
+<td><code>&lt;length&gt;</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>video-resolution</code>¹</td>
+<td>The resolution of the video plane area of the targeted display</td>
+<td><code>&lt;resolution&gt;</code>  <code>inifinite</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+</tbody></table>
+<p><em>¹ Under discussion (Issue <a target="_blank" rel="noopener" href="https://github.com/w3c/csswg-drafts/issues/5044">#5044</a>)</em></p>
+<p><strong>Scripting</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>scripting</code></td>
+<td>Checks whether the device allows scripting (i.e. JavaScript) where <code>enabled</code> allows scripting, <code>iniital-only</code></td>
+<td><code>enabled</code>  <code>initial-only</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+</tbody></table>
+<p><strong>User Preference</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Summary</th>
+<th>Values</th>
+<th>Added</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>prefers-reduced-motion</code></td>
+<td>Detects if the user’s system settings are set to reduce motion on the page, which is a <a target="_blank" rel="noopener" href="https://css-tricks.com/introduction-reduced-motion-media-query/">great accessibility check</a>.</td>
+<td><code>no-preference</code>  <code>reduce</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>prefers-reduced-transparency</code></td>
+<td>Detects if the user’s system settings prevent transparent across elements.</td>
+<td><code>no-preference</code>  <code>reduce</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>prefers-contrast</code></td>
+<td>Detects if the user’s system settings are set to either increase or decrease the amount of contrast between colors.</td>
+<td><code>no-preference</code>  <code>high</code>  <code>low</code>  <code>forced</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>prefers-color-scheme</code></td>
+<td>Detects if the user prefers a light or dark color scheme, which is a rapidly growing way to go about <a target="_blank" rel="noopener" href="https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/">creating “dark mode” interfaces</a>.</td>
+<td><code>light</code>  <code>dark</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>forced-colors</code></td>
+<td>Tests whether the browser restricts the colors available to use (which is <code>none</code> or <code>active</code>)</td>
+<td><code>active</code>  <code>none</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+<tr>
+<td><code>prefers-reduced-data</code></td>
+<td>Detects if the user prefers to use less data for the page to be rendered.</td>
+<td><code>no-preference</code>  <code>reduce</code></td>
+<td>Media Queries Level 5</td>
+</tr>
+</tbody></table>
+<p><strong>Deprecated</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Summary</th>
+<th>Removed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>device-aspect-ratio</code></td>
+<td>The width-to-height aspect ratio of the output device</td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>device-height</code></td>
+<td>The height of the device’s surface that displays rendered elements</td>
+<td>Media Queries Level 4</td>
+</tr>
+<tr>
+<td><code>device-width</code></td>
+<td>The width of the device’s surface that displays rendered elements</td>
+<td>Media Queries Level 4</td>
+</tr>
+</tbody></table>
+<h3 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h3><p>媒体查询像许多编程语言一样支持逻辑运算符，因此我们可以根据特定条件匹配媒体类型。</p>
+<p><code>@media</code> 规则本身是一个逻辑运算符，它基本上表明“如果”以下类型和功能是匹配的，则需要做一些事情。</p>
+<p><strong>and</strong> 如果要在一个宽度范围内定位屏幕，可以使用 <code>and</code> 运算符：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Matches screen between 320px AND 768px */</span></span><br><span class="line"><span class="keyword">@media</span> screen (<span class="attribute">min-width</span>: <span class="number">320px</span>) <span class="keyword">and</span> (<span class="attribute">max-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="comment">/* Styles! */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**or ** (或者逗号”,”) 我们还可以使用逗号分隔，用来匹配不同的特征：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">  Matches screens where either the user prefers dark mode or the screen is at least 1200px wide */</span></span><br><span class="line"><span class="keyword">@media</span> screen (<span class="attribute">prefers-color-scheme</span>: dark), (<span class="attribute">min-width</span> <span class="number">1200px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="comment">/* Styles! */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>not</strong>  如果你希望通过不支持或不匹配的设备来定位，可以使用 <code>not</code> 运算符<br>比如下方的示例，当设备是打印机时，此声明会删除 body 的背景色，并且只能显示一种颜色。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> print <span class="keyword">and</span> ( <span class="keyword">not</span>(<span class="attribute">color</span>) ) &#123;</span><br><span class="line">  <span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-min-和-max-匹配范围"><a href="#使用-min-和-max-匹配范围" class="headerlink" title="使用 min- 和 max- 匹配范围"></a>使用 min- 和 max- 匹配范围</h3><p>在下方的代码段中，当视口宽度大于 30em 且小于 80em 时，我们将 body 的背景绘制为紫色。<br>如果视口宽度与该值范围不匹配，则它将回退为白色。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">30em</span>) <span class="keyword">and</span> (<span class="attribute">max-width</span>: <span class="number">80em</span>) &#123;</span><br><span class="line">  <span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: purple;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <a target="_blank" rel="noopener" href="https://www.w3.org/TR/mediaqueries-4/#mq-ranges">Media Queries Level 4</a> 使用小于（&lt;），大于（&gt;）和等于（&#x3D;）运算符指定了一种新的且更简单的语法。</p>
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><p>CSS 允许你使用括号嵌套规则或一组语句，从而可以深入到我们想要操作的地方。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">20em</span>), <span class="keyword">not</span> all <span class="keyword">and</span> (<span class="attribute">min-height</span>: <span class="number">40em</span>) &#123;  </span><br><span class="line">  <span class="keyword">@media</span> <span class="keyword">not</span> all <span class="keyword">and</span> (<span class="attribute">pointer</span>: none) &#123; ... &#125;</span><br><span class="line">  <span class="keyword">@media</span> screen <span class="keyword">and</span> ( (<span class="attribute">min-width</span>: <span class="number">50em</span>) <span class="keyword">and</span> (<span class="attribute">orientation</span>: landscape) ), print <span class="keyword">and</span> ( <span class="keyword">not</span> (<span class="attribute">color</span>) ) &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>::: warning</p>
+<p>不建议使用太复杂的表达式，否则会得到非常难以维护的查询。</p>
+<p>:::</p>
+<p><strong>Thanks for reading!</strong></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/dxiaog">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">使用媒体查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-HTML-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.</span> <span class="toc-text">在 HTML 中使用媒体查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-CSS-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">在 CSS 中使用媒体查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-JavaScript-%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.</span> <span class="toc-text">在 JavaScript 中使用媒体查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">媒体查询的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#media"><span class="toc-number">2.1.</span> <span class="toc-text">@media</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Media-types"><span class="toc-number">2.2.</span> <span class="toc-text">Media types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Media-features"><span class="toc-number">2.3.</span> <span class="toc-text">Media features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Operators"><span class="toc-number">2.4.</span> <span class="toc-text">Operators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-min-%E5%92%8C-max-%E5%8C%B9%E9%85%8D%E8%8C%83%E5%9B%B4"><span class="toc-number">2.5.</span> <span class="toc-text">使用 min- 和 max- 匹配范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97"><span class="toc-number">2.6.</span> <span class="toc-text">嵌套</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&text=CSS 媒体查询"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&is_video=false&description=CSS 媒体查询"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSS 媒体查询&body=Check out this article: https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&title=CSS 媒体查询"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&name=CSS 媒体查询&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://dxiaog.github.io/2020/03/15/CSS%20%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/&t=CSS 媒体查询"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    段晓刚
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/dxiaog">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
