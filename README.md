@@ -1,2 +1,2 @@
 # dxiaog.github.io
-my blog
+My Hexo blog
