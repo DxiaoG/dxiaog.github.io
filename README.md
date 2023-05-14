@@ -1,2 +1,2 @@
-# dxiaog.github.io
-My Hexo blog
+# 我的博客
+一个简洁的静态博客。
